@@ -5,40 +5,40 @@
             Book Title:
         </label>
         <input name="booktitle" id="booktitle" required value="{{book.booktitle}}" />
-    </fildset>
-    <fieldset>
-        <label for="author" class="col-2 text-info">
-            Author:
-        </label>
-        <input name="author" id="author" value="{{book.author}}" />
-    </fieldset>
-    <fieldset>
-        <label for="genre" class="col-2 text-info">
-            Genre:
-        </label>
-        <select name="genre" id="genre">
-            {{#each genres}}
-            {{!-- <option>{{this.name}}</option> --}}
-            {{createOption this.name ../book.genre}}
-            {{/each}}
-        </select>
-    </fieldset>
-    <fieldset>
-        <label for="readingday" class="col-2 text-info">
-            Reading Day:
-        </label>
-        <input name="readingday" id="readingday" type="date" value="{{toShortDate book.readingday}}" />
-    </fieldset>
-    <fieldset>
-        <label for="review" class="col-2 text-info">
-            Review:
-        </label>
-        <input name="review" id="review" value="{{book.review}}" />
-    </fieldset>
+        </fildset>
+        <fieldset>
+            <label for="author" class="col-2 text-info">
+                Author:
+            </label>
+            <input name="author" id="author" value="{{book.author}}" />
+        </fieldset>
+        <fieldset>
+            <label for="genre" class="col-2 text-info">
+                Genre:
+            </label>
+            <select name="genre" id="genre">
+                {{#each genres}}
+                {{!-- <option>{{this.name}}</option> --}}
+                {{createOption this.name ../book.genre}}
+                {{/each}}
+            </select>
+        </fieldset>
+        <fieldset>
+            <label for="readingday" class="col-2 text-info">
+                Reading Day:
+            </label>
+            <input name="readingday" id="readingday" type="date" value="{{toShortDate book.readingday}}" />
+        </fieldset>
+        <fieldset>
+            <label for="review" class="col-2 text-info">
+                Review:
+            </label>
+            <input name="review" id="review" value="{{book.review}}" />
+        </fieldset>
 
-    <button class="offset-3 btn btn-info">
-        SAVE
-    </button>
+        <button class="offset-3 btn btn-info">
+            SAVE
+        </button>
 </form>
 <div class="container" align="center">
     <img src="/images/edit.png" class="img-thumbnail" alt="edit" width="300">
