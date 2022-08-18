@@ -10,6 +10,7 @@ var config = require('./config/globals');
 var hbs = require('hbs');
 //import passport & express session
 var passport = require('passport');
+var githubStrategy = require('passport-github2').Strategy;
 var session = require('express-session');
 var User = require('./models/user');
 
@@ -43,42 +44,67 @@ passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+//configure github strategy
+passport.use(new githubStrategy({
+  clientID: config.github.clientId,
+  clientSecret: config.github.clientSecret,
+  callbackURL: config.github.callbackUrl
+},
+  //callback function
+  async (accessToken, refreshToken, profile, done) => {
+    const user = await User.findOne({ oauthId: profile.id });
+    if (user) {
+      return done(null, user);
+    }
+    else {
+      const newUser = new User({
+        username: profile.username,
+        oauthId: profile.id,
+        oauthProvider: 'Github',
+        created: Date.now()
+      });
+      const savedUser = await newUser.save();
+      return done(null, savedUser);
+    }
+  }
+));
+
 app.use('/', indexRouter);
 app.use('/books', booksRouter);
 app.use('/genres', genresRouter);
 
 //After route declarations, connect to mongoose
-mongoose.connect(config.db, { useNewUrlParser: true, useUnifiedTopology: true})
-  .then((message) => console.log('Connection is successful.')) 
+mongoose.connect(config.db, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then((message) => console.log('Connection is successful.'))
   .catch((error) => console.log(error)); // connection failed
 
-  //Add helper methods for formatting genre selecting
-  hbs.registerHelper('createOption', (currentValue, selectedValue)=>{
-    // initialize selected property
-    var selectedProperty = '';
-    // if values are equal, set the selected property
-    if (currentValue.toUpperCase() == selectedValue.toUpperCase()) {
-      selectedProperty ='selected';
-    }
-    // generate html code for the option element with the selected property
-    var option = '<option ' + selectedProperty + '>' + currentValue + '</option>';
-    return new hbs.SafeString(option); // <option>VALUE</option>
+//Add helper methods for formatting genre selecting
+hbs.registerHelper('createOption', (currentValue, selectedValue) => {
+  // initialize selected property
+  var selectedProperty = '';
+  // if values are equal, set the selected property
+  if (currentValue.toUpperCase() == selectedValue.toUpperCase()) {
+    selectedProperty = 'selected';
+  }
+  // generate html code for the option element with the selected property
+  var option = '<option ' + selectedProperty + '>' + currentValue + '</option>';
+  return new hbs.SafeString(option); // <option>VALUE</option>
 
-  });
-  
-  //Add helper methods for formatting dates
-  hbs.registerHelper('toShortDate', (longDateValue)=>{
-    return new hbs.SafeString(longDateValue.toLocaleDateString('en-CA'));
-  });
+});
+
+//Add helper methods for formatting dates
+hbs.registerHelper('toShortDate', (longDateValue) => {
+  return new hbs.SafeString(longDateValue.toLocaleDateString('en-CA'));
+});
 
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
