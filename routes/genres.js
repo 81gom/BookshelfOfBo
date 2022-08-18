@@ -14,14 +14,14 @@ router.get('/', loggedIn, (req, res, next) => {
     Genre.find((err, genres) => {
         if (err) { console.log(err); }
         else {
-            res.render('genres/index', { title: 'Genres', dataset: genres, user: req.user });
+            res.render('genres/index', { title: 'Bo\'s Genres', dataset: genres, user: req.user });
         }
     });
 });
 
 //GET handler for /Genres/Add
 router.get('/add', loggedIn, (req, res, next) => {
-    res.render('genres/add', { title: 'Add a new Genre', user: req.user });
+    res.render('genres/add', { title: 'Create a New Genre', user: req.user });
 });
 
 //POST handler for /Genres/Add

@@ -19,7 +19,7 @@ router.get('/', (req, res, next) => {
         if (err) { console.log(err); }
         else {
             res.render('books/index', {
-                title: 'Welcome to Bookshelf of Bo!',
+                title: 'Bo\'s Book List',
                 dataset: books,
                 user: req.user
             })

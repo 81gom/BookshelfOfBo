@@ -1,7 +1,7 @@
-<h1>{{title}}</h1>
+<h3 class="text-info">{{title}}</h3>
 {{!-- add navigaion to add a new book--}}
 {{#if user}}
-  <a href="/books/add">Add a new book</a>
+  <a href="/books/add">Add a new list</a>
 {{/if}}
 {{!-- add a table to display books from MongoDB--}}
 <table class="table table-striped table-hover">
@@ -23,11 +23,14 @@
       <td>{{this.review}}</td>
       <td>
         {{#if ../user}}
-          <a href="/books/edit/{{this._id}}" class="btn btn-primary">Edit</a>
-          <a href="/books/delete/{{this._id}}" class="btn btn-danger" onclick="confirmDeletion()">Delete</a>
+          <a href="/books/edit/{{this._id}}" class="btn btn-outline-primary btn-sm">Edit</a>
+          <a href="/books/delete/{{this._id}}" class="btn btn-outline-danger btn-sm" onclick="confirmDeletion()">Delete</a>
         {{/if}}
       </td>
     </tr>
   {{/each}}
   </tbody>
 </table>
+<div class="container" align="right">
+    <img src="/images/list.png" class="rounded" alt="list" height="100">
+</div>

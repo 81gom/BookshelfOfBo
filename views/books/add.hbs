@@ -1,21 +1,22 @@
-<h1>{{title}}</h1>
+<h4 class="text-secondary">{{title}}</h4>
+
 <form method="POST">
   {{! Input names have to match the name of the fields in the mongo schema object }}
   {{! Mapping is not automatic, but it's best practices }}
   <fieldset>
-    <label for="booktitle" class="col-2">
+    <label for="booktitle" class="col-2 text-info">
       Book Title:
     </label>
     <input name="booktitle" id="booktitle" required />
   </fieldset>
   <fieldset>
-    <label for="author" class="col-2">
+    <label for="author" class="col-2 text-info">
       Author:
     </label>
     <input name="author" id="author" />
   </fieldset>
   <fieldset>
-    <label for="genre" class="col-2">
+    <label for="genre" class="col-2 text-info">
       Genre:
     </label>
     <select name="genre" id="genre">
@@ -25,13 +26,13 @@
     </select>
   </fieldset>
   <fieldset>
-    <label for="readingday" class="col-2">
+    <label for="readingday" class="col-2 text-info">
       Reading Day:
     </label>
     <input name="readingday" id="readingday" type="date" />
   </fieldset>
   <fieldset>
-    <label for="review" class="col-2">
+    <label for="review" class="col-2 text-info">
       Review:
     </label>
     <input name="review" id="review" />
@@ -42,3 +43,7 @@
       SAVE
     </button>
   </form>
+
+  <div class="container" align="center">
+    <img src="../images/add.png" class="rounded" alt="add" width="200">
+  </div>
